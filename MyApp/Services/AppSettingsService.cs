@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace MyApp.Services
 {
-    public class AppSettingService : IAppSettingsService
+    public class AppSettingsService : IAppSettingsService
     {
-        public AppSettingService(ICoreServiceDependencies coreServiceDependencies)
+        public AppSettingsService(ICoreServiceDependencies coreServiceDependencies)
         {
             FileStorage = coreServiceDependencies.FileStorage;
         }

@@ -32,8 +32,6 @@ namespace MyApp.PageModels
             var user = await LoginService?.Login(Username, Password);
 
             await CoreMethods.PushPageModel<DashboardPageModel>(user);
-
-            CoreMethods.RemoveFromNavigation<LoginPageModel>();
         }
 
     }

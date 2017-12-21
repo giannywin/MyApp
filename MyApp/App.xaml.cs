@@ -4,6 +4,9 @@ using MyApp.Models;
 using MyApp.Services;
 using MyApp.Services.API;
 using FreshMvvm;
+using System;
+using System.Reflection;
+using System.Linq;
 
 namespace MyApp
 {
@@ -38,9 +41,39 @@ namespace MyApp
         }
 
         protected void RegisterDependencies() {
-            FreshIOC.Container.Register<ICoreServiceDependencies, CoreServiceDependencies>();
-            FreshIOC.Container.Register<IAppSettingsService, AppSettingService>();
-            FreshIOC.Container.Register<ILoginService, LoginService>();
+            RegisterServices();
+        }
+
+        protected void RegisterServices() {
+            var types = typeof(CoreServiceDependencies).Assembly().DefinedTypes.ToList();
+
+            var serviceTypes = types.Where(t => t.Namespace.StartsWith(typeof(CoreServiceDependencies).Namespace, StringComparison.OrdinalIgnoreCase) &&
+                                           t.Name.Contains("Service") &&
+                                           !t.IsInterface).ToList();
+
+            var serviceInterfaceTypes = types.Where(t => t.Namespace.StartsWith(typeof(ICoreServiceDependencies).Namespace, StringComparison.OrdinalIgnoreCase) &&
+                                                    t.Name.Contains("Service") &&
+                                                    t.Name.StartsWith("I", StringComparison.OrdinalIgnoreCase) &&
+                                                    t.IsInterface).ToList();
+
+            var methods = typeof(FreshTinyIOCBuiltIn).GetRuntimeMethods().Where(t => t.Name == "Register").ToList();
+            MethodInfo registerMethod = null;
+
+            foreach(var method in methods) {
+                var parameters = method.GetGenericArguments();
+                if (parameters.Count() == 2 && parameters[0].Name == "RegisterType" && parameters[1].Name == "RegisterImplementation")
+                    registerMethod = method;
+            }
+
+            foreach(var serviceInterfaceType in serviceInterfaceTypes) {
+                var serviceType = serviceTypes.FirstOrDefault(t => serviceInterfaceType.IsAssignableFrom(t) &&
+                                                                   t.Name == serviceInterfaceType.Name.Substring(1));
+
+                if (serviceType != null && registerMethod != null) {
+                    var genericMethod = registerMethod.MakeGenericMethod(new [] { serviceInterfaceType.AsType(), serviceType.AsType()});
+                    genericMethod.Invoke(FreshIOC.Container, null);
+                }
+            }
         }
     }
 }

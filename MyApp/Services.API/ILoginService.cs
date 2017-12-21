@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MyApp.Models;
 
-namespace MyApp.Services
+namespace MyApp.Services.API
 {
     public interface ILoginService
     {

@@ -1,7 +1,8 @@
 ﻿using MyApp.PageModels;
 using Xamarin.Forms;
+using MyApp.Models;
 using MyApp.Services;
-using System.Reflection;
+using MyApp.Services.API;
 using FreshMvvm;
 
 namespace MyApp
@@ -19,7 +20,11 @@ namespace MyApp
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            var appSettingsService = FreshIOC.Container.Resolve<IAppSettingsService>();
+
+            var settings = appSettingsService.GetSettings();
+
+            Properties[MyAppConstants.AppSettings] = settings;
         }
 
         protected override void OnSleep()
@@ -33,6 +38,8 @@ namespace MyApp
         }
 
         protected void RegisterDependencies() {
+            FreshIOC.Container.Register<ICoreServiceDependencies, CoreServiceDependencies>();
+            FreshIOC.Container.Register<IAppSettingsService, AppSettingService>();
             FreshIOC.Container.Register<ILoginService, LoginService>();
         }
     }

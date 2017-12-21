@@ -1,12 +1,8 @@
-﻿using System;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using MyApp.Services.API;
+using MyApp.Droid.Services;
 
 namespace MyApp.Droid
 {
@@ -22,7 +18,13 @@ namespace MyApp.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
+            RegisterDependencies();
+
             LoadApplication(new App());
+        }
+
+        private void RegisterDependencies() {
+            FreshMvvm.FreshIOC.Container.Register<IFileStorage, FileStorage>();
         }
     }
 }

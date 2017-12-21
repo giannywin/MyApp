@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
+using MyApp.Services.API;
+using MyApp.iOS.Services;
 using UIKit;
 
 namespace MyApp.iOS
@@ -19,9 +17,16 @@ namespace MyApp.iOS
 			Xamarin.Calabash.Start();
 #endif
 
+            RegisterDependencies();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private void RegisterDependencies()
+        {
+            FreshMvvm.FreshIOC.Container.Register<IFileStorage, FileStorage>();
         }
     }
 }

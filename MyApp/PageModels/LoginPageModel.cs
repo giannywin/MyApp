@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-using MyApp.Services;
+using MyApp.Services.API;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using MyApp.Models;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MyApp.Pages.LoginPage">
+    <ContentPage.Content>
+        <StackLayout Padding="40" HorizontalOptions="Fill">
+            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" />
+            <Entry Text="{Binding Username}"
+                Placeholder="Username"/>
+            <Entry Text="{Binding Password}"
+                Placeholder="Password" />
+            <Button Text="Login"
+                Command="{Binding OnLoginCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

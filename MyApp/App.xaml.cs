@@ -1,4 +1,8 @@
-﻿using Xamarin.Forms;
+﻿using MyApp.PageModels;
+using Xamarin.Forms;
+using MyApp.Services;
+using System.Reflection;
+using FreshMvvm;
 
 namespace MyApp
 {
@@ -8,7 +12,9 @@ namespace MyApp
         {
             InitializeComponent();
 
-            MainPage = new MyAppPage();
+            RegisterDependencies();
+
+            MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginPageModel>());
         }
 
         protected override void OnStart()
@@ -24,6 +30,10 @@ namespace MyApp
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        protected void RegisterDependencies() {
+            FreshIOC.Container.Register<ILoginService, LoginService>();
         }
     }
 }

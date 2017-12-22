@@ -62,6 +62,15 @@
     <Compile Include="Services.API\IFileStorage.cs" />
     <Compile Include="Services.API\ILoginService.cs" />
     <Compile Include="Models\MyAppConstants.cs" />
+    <Compile Include="Models\TokenResponse.cs" />
+    <Compile Include="PageModels\BasePageModel.cs" />
+    <Compile Include="Services.API\IHttpService.cs" />
+    <Compile Include="Services\HttpService.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\ListResult.cs" />
+    <Compile Include="Models\ListRecord.cs" />
+    <Compile Include="Models\RowProperties.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

@@ -2,6 +2,6 @@
 {
     public interface ICoreServiceDependencies
     {
-        IFileStorage FileStorage { get; set; }
+        IHttpService HttpService { get; set; }
     }
 }

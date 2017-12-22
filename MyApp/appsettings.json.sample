@@ -1,3 +1,4 @@
-﻿{
-    "api": "https://github.com"
+{
+    "api": "https://github.com",
+    "appName": "MyApp"
 }

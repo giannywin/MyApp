@@ -4,7 +4,7 @@ using MyApp.Models;
 
 namespace MyApp.PageModels
 {
-    public class DashboardPageModel : FreshMvvm.FreshBasePageModel
+    public class DashboardPageModel : BasePageModel
     {
         public DashboardPageModel()
         {

@@ -18,16 +18,18 @@ namespace MyApp
 
             RegisterDependencies();
 
+            var appSettingsService = FreshIOC.Container.Resolve<IAppSettingsService>();
+
+            var settings = appSettingsService.GetSettings();
+
+            Current.Properties[MyAppConstants.AppSettings] = settings;
+
             MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginPageModel>());
         }
 
         protected override void OnStart()
         {
-            var appSettingsService = FreshIOC.Container.Resolve<IAppSettingsService>();
-
-            var settings = appSettingsService.GetSettings();
-
-            Properties[MyAppConstants.AppSettings] = settings;
+            // Handle when your app starts
         }
 
         protected override void OnSleep()
@@ -47,11 +49,12 @@ namespace MyApp
         protected void RegisterServices() {
             var types = typeof(CoreServiceDependencies).Assembly().DefinedTypes.ToList();
 
-            var serviceTypes = types.Where(t => t.Namespace.StartsWith(typeof(CoreServiceDependencies).Namespace, StringComparison.OrdinalIgnoreCase) &&
+            var serviceTypes = types.Where(t => t.Namespace?.StartsWith(typeof(CoreServiceDependencies)?.Namespace, StringComparison.OrdinalIgnoreCase) == true &&
                                            t.Name.Contains("Service") &&
+                                           !t.IsAbstract &&
                                            !t.IsInterface).ToList();
 
-            var serviceInterfaceTypes = types.Where(t => t.Namespace.StartsWith(typeof(ICoreServiceDependencies).Namespace, StringComparison.OrdinalIgnoreCase) &&
+            var serviceInterfaceTypes = types.Where(t => t.Namespace?.StartsWith(typeof(ICoreServiceDependencies)?.Namespace, StringComparison.OrdinalIgnoreCase) == true &&
                                                     t.Name.Contains("Service") &&
                                                     t.Name.StartsWith("I", StringComparison.OrdinalIgnoreCase) &&
                                                     t.IsInterface).ToList();

@@ -4,11 +4,11 @@ namespace MyApp.Services
 {
     public class CoreServiceDependencies : ICoreServiceDependencies
     {
-        public CoreServiceDependencies(IFileStorage fileStorage)
+        public CoreServiceDependencies(IHttpService httpService)
         {
-            FileStorage = fileStorage;
+            HttpService = httpService;
         }
 
-        public IFileStorage FileStorage { get; set; }
+        public IHttpService HttpService { get; set; }
     }
 }

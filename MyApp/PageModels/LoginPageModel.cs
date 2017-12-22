@@ -6,7 +6,7 @@ using MyApp.Models;
 
 namespace MyApp.PageModels
 {
-    public class LoginPageModel : FreshMvvm.FreshBasePageModel
+    public class LoginPageModel : BasePageModel
     {
         public LoginPageModel(ILoginService loginService)
         {
@@ -17,11 +17,17 @@ namespace MyApp.PageModels
 
         protected internal ILoginService LoginService { get; set; }
 
+        public override void Init(object initData) {
+            base.Init(initData);
+
+            Title = AppSettings?.AppName;
+        }
+
         public string Username { get; set; }
 
         public string Password { get; set; }
 
-        public string Title { get; set; } = "MyApp";
+        public string Title { get; set; }
 
         public ICommand OnLoginCommand { get; set; }
 
@@ -30,6 +36,15 @@ namespace MyApp.PageModels
         public async Task Login()
         {
             var user = await LoginService?.Login(Username, Password);
+
+            if (Application.Current.Properties.ContainsKey(MyAppConstants.CurrentUser))
+            {
+                Application.Current.Properties[MyAppConstants.CurrentUser] = user;
+            }
+            else
+            {
+                Application.Current.Properties.Add(MyAppConstants.CurrentUser, user);
+            }
 
             await CoreMethods.PushPageModel<DashboardPageModel>(user);
         }

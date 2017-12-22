@@ -6,9 +6,9 @@ namespace MyApp.Services
 {
     public class AppSettingsService : IAppSettingsService
     {
-        public AppSettingsService(ICoreServiceDependencies coreServiceDependencies)
+        public AppSettingsService(IFileStorage fileStorage)
         {
-            FileStorage = coreServiceDependencies.FileStorage;
+            FileStorage = fileStorage;
         }
 
         protected internal IFileStorage FileStorage { get; set; }

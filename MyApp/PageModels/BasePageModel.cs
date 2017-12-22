@@ -1,9 +1,10 @@
-﻿using MyApp.Models;
+﻿using System.ComponentModel;
+using MyApp.Models;
 using Xamarin.Forms;
 
 namespace MyApp.PageModels
 {
-    public abstract class BasePageModel : FreshMvvm.FreshBasePageModel
+    public abstract class BasePageModel : FreshMvvm.FreshBasePageModel, INotifyPropertyChanged
     {
         private AppSettings _appSettings;
 

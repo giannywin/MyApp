@@ -4,12 +4,16 @@ using System.Net.Http;
 using MyApp.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using Xamarin.Forms;
 
 namespace MyApp.Services
 {
-    public class HttpService : BaseService, IHttpService
+    public class HttpService: IHttpService
     {
+        public HttpService(IAppSettingsService appSettingsService) {
+            AppSettingsService = appSettingsService;
+        }
+
+        protected internal IAppSettingsService AppSettingsService { get; set; }
 
         public async Task<HttpResponseMessage> PostAsync(string url, Dictionary<string, string> parameters, bool refreshToken = true)
         {
@@ -55,7 +59,7 @@ namespace MyApp.Services
         }
 
         protected internal async Task RefreshToken() {
-            var appSettings = AppSettings;
+            var appSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
 
             var token = GetToken();
 
@@ -76,13 +80,11 @@ namespace MyApp.Services
         }
 
         public virtual string GetToken() {
-            return Application.Current.Properties.ContainsKey(MyAppConstants.Token)
-                                    ? Application.Current.Properties[MyAppConstants.Token] as string
-                                    : null;
+            return AppSettingsService.Get<string>(MyAppConstants.Token);
         }
 
         public virtual void SetToken(string token) {
-            Application.Current.Properties[MyAppConstants.Token] = token;
+            AppSettingsService.Set(MyAppConstants.Token, token);
         }
     }
 }

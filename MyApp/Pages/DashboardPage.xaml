@@ -5,7 +5,7 @@
 	<ContentPage.Content>
         <StackLayout Orientation="Horizontal">
             <Label Text="Welcome" />
-            <Label Text="{Binding Username}" />
+            <Label Text="{Binding User.FullName}" />
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

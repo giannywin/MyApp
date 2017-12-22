@@ -55,7 +55,6 @@
     </Compile>
     <Compile Include="PageModels\DashboardPageModel.cs" />
     <Compile Include="Services\CoreServiceDependencies.cs" />
-    <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Services.API\IAppSettingsService.cs" />
     <Compile Include="Services.API\ICoreServiceDependencies.cs" />
@@ -63,14 +62,17 @@
     <Compile Include="Services.API\ILoginService.cs" />
     <Compile Include="Models\MyAppConstants.cs" />
     <Compile Include="Models\TokenResponse.cs" />
-    <Compile Include="PageModels\BasePageModel.cs" />
     <Compile Include="Services.API\IHttpService.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\BaseService.cs" />
-    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ListResult.cs" />
     <Compile Include="Models\ListRecord.cs" />
     <Compile Include="Models\RowProperties.cs" />
+    <Compile Include="Models\Demographics\Employee.cs" />
+    <Compile Include="Models\AppSettings.cs" />
+    <Compile Include="Models\Login\LoginUserSettings.cs" />
+    <Compile Include="Models\Login\LoginInfo.cs" />
+    <Compile Include="Models\Login\LoginResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -91,9 +93,13 @@
     <Reference Include="FreshMvvm">
       <HintPath>..\packages\FreshMvvm.2.2.3\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshMvvm.dll</HintPath>
     </Reference>
+    <Reference Include="PropertyChanged">
+      <HintPath>..\packages\PropertyChanged.Fody.2.2.4.0\lib\netstandard1.0\PropertyChanged.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -101,6 +107,8 @@
     <Folder Include="PageModels\" />
     <Folder Include="Pages\" />
     <Folder Include="Services.API\" />
+    <Folder Include="Models\Demographics\" />
+    <Folder Include="Models\Login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">
@@ -109,4 +117,5 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.5.0.121934\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.5.0.121934\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\Fody.2.2.1.0\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.2.2.1.0\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
 </Project>

@@ -1,24 +1,21 @@
-﻿using System;
-using Xamarin.Forms;
-using MyApp.Models;
+﻿using MyApp.Models;
+using System.ComponentModel;
 
 namespace MyApp.PageModels
 {
-    public class DashboardPageModel : BasePageModel
+    public class DashboardPageModel : FreshMvvm.FreshBasePageModel, INotifyPropertyChanged
     {
         public DashboardPageModel()
         {
         }
 
-        public string Username { get; set; }
+        public User User { get; set; }
 
         public override void Init(object initData)
         {
             base.Init(initData);
 
-            var user = initData as User;
-
-            Username = user?.Username;
+           User = initData as User;
         }
     }
 }

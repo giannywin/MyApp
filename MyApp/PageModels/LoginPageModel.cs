@@ -3,24 +3,28 @@ using MyApp.Services.API;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using MyApp.Models;
+using System.ComponentModel;
 
 namespace MyApp.PageModels
 {
-    public class LoginPageModel : BasePageModel
+    public class LoginPageModel : FreshMvvm.FreshBasePageModel, INotifyPropertyChanged
     {
-        public LoginPageModel(ILoginService loginService)
+        public LoginPageModel(ILoginService loginService, IAppSettingsService appSettingsService)
         {
             LoginService = loginService;
+            AppSettingsService = appSettingsService;
 
             OnLoginCommand = new Command(async () => { await Login(); });
         }
 
         protected internal ILoginService LoginService { get; set; }
 
+        protected internal IAppSettingsService AppSettingsService { get; set; }
+
         public override void Init(object initData) {
             base.Init(initData);
 
-            Title = AppSettings?.AppName;
+            Title = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings)?.AppName;
         }
 
         public string Username { get; set; }
@@ -29,25 +33,23 @@ namespace MyApp.PageModels
 
         public string Title { get; set; }
 
+        public string Message { get; set; }
+
         public ICommand OnLoginCommand { get; set; }
 
         public User User { get; set; }
 
         public async Task Login()
         {
-            var user = await LoginService?.Login(Username, Password);
+            var loginResult = await LoginService?.Login(Username, Password);
 
-            if (Application.Current.Properties.ContainsKey(MyAppConstants.CurrentUser))
+            if (loginResult.User != null)
             {
-                Application.Current.Properties[MyAppConstants.CurrentUser] = user;
+                await CoreMethods.PushPageModel<DashboardPageModel>(loginResult.User);
+                Message = null;
+            } else {
+                Message = loginResult.Error;
             }
-            else
-            {
-                Application.Current.Properties.Add(MyAppConstants.CurrentUser, user);
-            }
-
-            await CoreMethods.PushPageModel<DashboardPageModel>(user);
         }
-
     }
 }

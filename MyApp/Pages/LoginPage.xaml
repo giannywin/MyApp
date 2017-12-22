@@ -5,6 +5,7 @@
     <ContentPage.Content>
         <StackLayout Padding="40" HorizontalOptions="Fill">
             <Label Text="{Binding Title}" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Message}" HorizontalTextAlignment="Center" />
             <Entry Text="{Binding Username}"
                 Placeholder="Username"/>
             <Entry Text="{Binding Password}"

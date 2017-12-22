@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyApp.Models;
+using MyApp.Models.Login;
 using MyApp.Services.API;
 using Newtonsoft.Json;
 
@@ -8,27 +9,50 @@ namespace MyApp.Services
 {
     public class LoginService : BaseService, ILoginService
     {
-        public LoginService(ICoreServiceDependencies coreServiceDependencies) {
+        public LoginService(ICoreServiceDependencies coreServiceDependencies): base(coreServiceDependencies) {
             HttpService = coreServiceDependencies.HttpService;
         }
 
         public IHttpService HttpService { get; set; }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<LoginResult> Login(string username, string password)
         {
             var appSettings = AppSettings;
 
             var response = await HttpService.PostAsync($"{appSettings?.Api}/api/token",
                                                        new Dictionary<string, string> {{"username", username}, {"password", password}},
-                                                       true);
+                                                       false);
+
+            var loginResult = new LoginResult();
             if (response.IsSuccessStatusCode) {
                 var content = await response.Content.ReadAsStringAsync();
                 var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(content);
 
                 HttpService.SetToken(tokenResponse.Access_Token);
+
+                loginResult.User = await LoadLoginInfo(appSettings);
             }
 
-            return await Task.Run(() => new User { Id = 1, Username = username, Password = password });
+            if (loginResult.User == null) {
+                loginResult.Error = "Login failed";
+            }
+
+            return loginResult;
+        }
+
+        public async Task<User> LoadLoginInfo(AppSettings appSettings) {
+            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/security/loadlogininfo", true);
+
+            User user = null;
+            if (response.IsSuccessStatusCode) {
+                var content = await response.Content.ReadAsStringAsync();
+                var loginInfo = JsonConvert.DeserializeObject<LoginInfo>(content);
+
+                AppSettingsService.Set(MyAppConstants.CurrentUser, loginInfo.User);
+
+                user = loginInfo.User;
+            }
+            return user;
         }
     }
 }

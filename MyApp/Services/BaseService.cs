@@ -1,17 +1,22 @@
 ﻿using MyApp.Models;
-using Xamarin.Forms;
+using MyApp.Services.API;
 
 namespace MyApp.Services
 {
     public abstract class BaseService
     {
+        public BaseService(ICoreServiceDependencies coreServiceDependencies) {
+            AppSettingsService = coreServiceDependencies.AppSettingsService;
+        }
+
+        protected internal IAppSettingsService AppSettingsService { get; set; }
+
+
         protected internal virtual AppSettings AppSettings
         {
             get
             {
-                return Application.Current.Properties.ContainsKey(MyAppConstants.AppSettings)
-                                  ? (AppSettings)Application.Current.Properties[MyAppConstants.AppSettings]
-                                  : null;
+                return AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
             }
         }
 
@@ -19,9 +24,7 @@ namespace MyApp.Services
         {
             get
             {
-                return Application.Current.Properties.ContainsKey(MyAppConstants.CurrentUser)
-                                  ? (User)Application.Current.Properties[MyAppConstants.CurrentUser]
-                                  : null;
+                return AppSettingsService.Get<User>(MyAppConstants.CurrentUser);
             }
         }
     }

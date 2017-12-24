@@ -10,10 +10,7 @@ namespace MyApp.Services
     public class LoginService : BaseService, ILoginService
     {
         public LoginService(ICoreServiceDependencies coreServiceDependencies): base(coreServiceDependencies) {
-            HttpService = coreServiceDependencies.HttpService;
         }
-
-        public IHttpService HttpService { get; set; }
 
         public async Task<LoginResult> Login(string username, string password)
         {
@@ -41,7 +38,7 @@ namespace MyApp.Services
         }
 
         public async Task<User> LoadLoginInfo(AppSettings appSettings) {
-            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/security/loadlogininfo", true);
+            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/security/loadlogininfo");
 
             User user = null;
             if (response.IsSuccessStatusCode) {
@@ -53,6 +50,24 @@ namespace MyApp.Services
                 user = loginInfo.User;
             }
             return user;
+        }
+
+        public async Task<SystemSettings> GetSystemSettings() {
+            var appSettings = AppSettings;
+
+            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/portal/getportalsettings", false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var systemSettings = JsonConvert.DeserializeObject<SystemSettings>(content);
+
+                AppSettingsService.Set(MyAppConstants.SystemSettings, systemSettings);
+
+                return systemSettings;
+            }
+
+            return null;
         }
     }
 }

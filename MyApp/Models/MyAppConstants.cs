@@ -6,6 +6,8 @@
 
         public static readonly string AppSettings = "appSettings";
 
+        public static readonly string SystemSettings = "systemSettings";
+
         public static readonly string CurrentUser = "currentUser";
 
         public static readonly string Token = "token";

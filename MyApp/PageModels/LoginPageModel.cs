@@ -23,15 +23,13 @@ namespace MyApp.PageModels
 
         public override void Init(object initData) {
             base.Init(initData);
-
-            Title = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings)?.AppName;
         }
 
         public string Username { get; set; }
 
         public string Password { get; set; }
 
-        public string Title { get; set; }
+        public string CompanyName { get; set; }
 
         public string Message { get; set; }
 
@@ -50,6 +48,12 @@ namespace MyApp.PageModels
             } else {
                 Message = loginResult.Error;
             }
+        }
+
+        public async Task GetSystemSettings() {
+            var systemSettings = await LoginService?.GetSystemSettings();
+
+            CompanyName = systemSettings?.CompanyName;
         }
     }
 }

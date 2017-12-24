@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Threading.Tasks;
+using MyApp.PageModels;
 using Xamarin.Forms;
 
 namespace MyApp.Pages
@@ -9,7 +8,16 @@ namespace MyApp.Pages
     {
         public LoginPage()
         {
+            Appearing += async (sender, args) => await GetSystemSettings();
+
             InitializeComponent();
+        }
+
+        protected internal async Task GetSystemSettings()
+        {
+            var viewModel = BindingContext as LoginPageModel;
+
+            await viewModel.GetSystemSettings();
         }
     }
 }

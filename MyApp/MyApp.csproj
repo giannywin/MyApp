@@ -37,6 +37,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -73,6 +77,13 @@
     <Compile Include="Models\Login\LoginUserSettings.cs" />
     <Compile Include="Models\Login\LoginInfo.cs" />
     <Compile Include="Models\Login\LoginResult.cs" />
+    <Compile Include="Services.API\IDashboardService.cs" />
+    <Compile Include="Services\DashboardService.cs" />
+    <Compile Include="Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageModels\MainPageModel.cs" />
+    <Compile Include="Models\SystemSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

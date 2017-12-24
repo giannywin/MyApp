@@ -7,9 +7,12 @@ namespace MyApp.Services
     {
         public BaseService(ICoreServiceDependencies coreServiceDependencies) {
             AppSettingsService = coreServiceDependencies.AppSettingsService;
+            HttpService = coreServiceDependencies.HttpService;
         }
 
         protected internal IAppSettingsService AppSettingsService { get; set; }
+
+        protected internal IHttpService HttpService { get; set; }
 
 
         protected internal virtual AppSettings AppSettings

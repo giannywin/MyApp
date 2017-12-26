@@ -6,6 +6,8 @@ namespace MyApp.Models
     {
         public string Title { get; set; }
 
+        public string Icon { get; set; }
+
         public Type PageType { get; set; }
     }
 }

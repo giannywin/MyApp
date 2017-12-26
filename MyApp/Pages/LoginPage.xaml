@@ -10,7 +10,8 @@
                 Placeholder="Username"/>
             <Entry Text="{Binding Password}"
                 Placeholder="Password" />
-            <Button Text="Login"
+            <Button Text="Log In"
+                Style="{StaticResource PrimaryButton}"
                 Command="{Binding OnLoginCommand}"/>
         </StackLayout>
     </ContentPage.Content>

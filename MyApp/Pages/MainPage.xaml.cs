@@ -21,6 +21,10 @@ namespace MyApp.Pages
             var viewModel = BindingContext as MainPageModel;
 
             menu.ItemsSource = viewModel.MenuPageItems;
+
+            var currentUser = viewModel.AppSettingsService.Get<User>(MyAppConstants.CurrentUser);
+
+            loginName.Text = currentUser != null ? currentUser.FirstName + " " + currentUser.LastName: string.Empty;
         }
 
         public void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)

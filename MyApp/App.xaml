@@ -1,6 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MyApp.App">
 	<Application.Resources>
-		<!-- Application resource dictionary -->
+		<ResourceDictionary>
+            <Color x:Key="White">#ffffff</Color>
+            <Color x:Key="PrimaryBlue">#255ead</Color>
+            <Color x:Key="DarkPrimaryBlue">#215398</Color>
+
+            <Style x:Key="PrimaryButton"
+                TargetType="Button">
+                <Setter
+                    Property="TextColor"
+                    Value="{StaticResource White}" />
+                <Setter
+                    Property="BackgroundColor"
+                    Value="{StaticResource PrimaryBlue}" />
+                <Setter
+                    Property="BorderColor"
+                    Value="{StaticResource DarkPrimaryBlue}" />
+                <Setter
+                    Property="BorderRadius"
+                    Value="6" />
+                <Setter
+                    Property="BorderWidth"
+                    Value="1" />
+            </Style>
+            <Style x:Key="MenuItem"
+                TargetType="View">
+                <Setter
+                    Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
 	</Application.Resources>
 </Application>

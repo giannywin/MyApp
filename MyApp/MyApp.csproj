@@ -41,6 +41,10 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\my_tasks.png" />
+    <EmbeddedResource Include="Assets\Images\offline.png" />
+    <EmbeddedResource Include="Assets\Images\medical_records.png" />
+    <EmbeddedResource Include="Assets\Images\event_reports.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -85,6 +89,7 @@
     </Compile>
     <Compile Include="PageModels\MainPageModel.cs" />
     <Compile Include="Models\SystemSettings.cs" />
+    <Compile Include="Converters\StringToImageResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -121,6 +126,9 @@
     <Folder Include="Services.API\" />
     <Folder Include="Models\Demographics\" />
     <Folder Include="Models\Login\" />
+    <Folder Include="Assets\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Assets\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">

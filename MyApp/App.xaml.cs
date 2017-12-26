@@ -24,8 +24,12 @@ namespace MyApp
 
             Current.Properties[MyAppConstants.AppSettings] = settings;
 
-            MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginPageModel>());
+            NavigationPage = new NavigationPage();
+
+            MainPage = FreshPageModelResolver.ResolvePageModel<LoginPageModel>();
         }
+
+        public static NavigationPage NavigationPage { get; set; }
 
         protected override void OnStart()
         {

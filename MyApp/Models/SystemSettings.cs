@@ -11,6 +11,8 @@ namespace MyApp.Models
 
         public bool PortalDisableMyWork { get; set; }
 
+        public bool PortalDisableIncidents { get; set; }
+
         public string WhiteLabellingLogo { get; set; }
     }
 }

@@ -4,10 +4,11 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using MyApp.Models;
 using System.ComponentModel;
+using FreshMvvm;
 
 namespace MyApp.PageModels
 {
-    public class LoginPageModel : FreshMvvm.FreshBasePageModel, INotifyPropertyChanged
+    public class LoginPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         public LoginPageModel(ILoginService loginService, IAppSettingsService appSettingsService)
         {
@@ -43,7 +44,14 @@ namespace MyApp.PageModels
 
             if (loginResult.User != null)
             {
-                await CoreMethods.PushPageModel<DashboardPageModel>(loginResult.User);
+                var masterDetailPage = (MasterDetailPage) FreshPageModelResolver.ResolvePageModel<MainPageModel>();
+
+                await App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel<DashboardPageModel>(loginResult.User));
+
+                masterDetailPage.Detail = App.NavigationPage;
+
+                Application.Current.MainPage = masterDetailPage;
+
                 Message = null;
             } else {
                 Message = loginResult.Error;

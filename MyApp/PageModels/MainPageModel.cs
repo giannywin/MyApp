@@ -30,7 +30,7 @@ namespace MyApp.PageModels
 
             if (!systemSettings.PortalDisableMyRecords)
             {
-                MenuPageItems.Add(new MenuPageItem { Title = "My Records", Icon = "medical_records.png", PageType = typeof(DashboardPageModel) });
+                MenuPageItems.Add(new MenuPageItem { Title = "My Records", Icon = "medical_records.png", PageType = typeof(MainTabPageModel) });
             }
 
             if (!systemSettings.PortalDisableIncidents)

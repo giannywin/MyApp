@@ -90,6 +90,8 @@
     <Compile Include="PageModels\MainPageModel.cs" />
     <Compile Include="Models\SystemSettings.cs" />
     <Compile Include="Converters\StringToImageResource.cs" />
+    <Compile Include="PageModels\MainTabPageModel.cs" />
+    <Compile Include="Pages\MainTabPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

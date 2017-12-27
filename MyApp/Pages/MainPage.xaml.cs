@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MyApp.Models;
 using MyApp.PageModels;
 using Xamarin.Forms;
@@ -31,7 +30,7 @@ namespace MyApp.Pages
         {
             var item = (MenuPageItem) e.SelectedItem;
             var viewModel = BindingContext as MainPageModel;
-            App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel<DashboardPageModel>(new User { FullName = item.Title }));
+            App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel(item.PageType, (object) new User { FullName = item.Title }));
             IsPresented = false;
         }
 

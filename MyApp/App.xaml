@@ -30,6 +30,21 @@
                     Property="VerticalOptions"
                     Value="Center" />
             </Style>
+            <Style x:Key="ListWidgetIcon"
+                TargetType="View">
+                <Setter
+                    Property="VerticalOptions"
+                    Value="Center" />
+                <Setter
+                    Property="HorizontalOptions"
+                    Value="Start" />
+                <Setter
+                    Property="HeightRequest"
+                    Value="72" />
+                <Setter
+                    Property="WidthRequest"
+                    Value="72" />
+            </Style>
         </ResourceDictionary>
 	</Application.Resources>
 </Application>

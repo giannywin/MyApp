@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MyApp.Views.ListWidgetView"
+    xmlns:converters="clr-namespace:MyApp.Converters"
+    xmlns:behaviors="clr-namespace:MyApp.Behaviors"
+    x:Name="this">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="selectedItemConverter" />
+            <converters:RecordTypeToImageResource x:Key="recordTypeToImageResource" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+	<StackLayout Padding="0"
+        VerticalOptions="FillAndExpand">
+        <ListView ItemsSource="{Binding Source={x:Reference this}, Path=ListResult.Records}"
+            HasUnevenRows="true"
+            SeparatorVisibility="None">
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior
+                EventName="ItemSelected"
+                Command="{Binding Source={x:Reference this}, Path=HandleItemSelected}"
+                Converter="{StaticResource selectedItemConverter}" />
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ContentView>
+                            <StackLayout Orientation="Horizontal" Padding="5,10,5,10">
+                                <Image Source="{Binding Record.RecordType, Converter={StaticResource recordTypeToImageResource}}"
+                                        Aspect="AspectFill"
+                                        Style="{StaticResource ListWidgetIcon}" />
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Record.Title}" />
+                                        <Label Text="{Binding Record.SubTitleLabel}" />
+                                        <Label Text="{Binding Record.SubTitle}" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Record.SubDetail}" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Record.DetailLabel}" />
+                                        <Label Text="{Binding Record.Detail}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ContentView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentView>

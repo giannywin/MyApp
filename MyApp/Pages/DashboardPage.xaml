@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:MyApp.Views"
     x:Class="MyApp.Pages.DashboardPage">
 	<ContentPage.Content>
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Welcome" />
-            <Label Text="{Binding User.FullName}" />
+        <StackLayout Orientation="Vertical"
+            VerticalOptions="FillAndExpand">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Welcome" />
+                <Label Text="{Binding User.FullName}" />
+            </StackLayout>
+            <views:ListWidgetView ListResult="{Binding ListResult}"
+                HandleItemSelected="{Binding ListNavigateCommand}"
+                VerticalOptions="FillAndExpand">
+            </views:ListWidgetView>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

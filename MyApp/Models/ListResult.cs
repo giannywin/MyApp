@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyApp.Models
+﻿namespace MyApp.Models
 {
     public class ListResult<T>
     {
@@ -11,6 +8,6 @@ namespace MyApp.Models
 
         public int SecondaryCount { get; set; }
 
-        public IEnumerable<ListRecord<T>> Records { get; set; }
+        public ListRecord<T>[] Records { get; set; }
     }
 }

@@ -25,20 +25,20 @@ namespace MyApp.PageModels
 
             if (!systemSettings.PortalDisableMyWork)
             {
-                MenuPageItems.Add(new MenuPageItem { Title = "My Tasks", Icon = "my_tasks.png", PageType = typeof(DashboardPageModel) });
+                MenuPageItems.Add(new MenuPageItem { Title = "My Tasks", Icon = "menu_1.png", PageType = typeof(DashboardPageModel) });
             }
 
             if (!systemSettings.PortalDisableMyRecords)
             {
-                MenuPageItems.Add(new MenuPageItem { Title = "My Records", Icon = "medical_records.png", PageType = typeof(MainTabPageModel) });
+                MenuPageItems.Add(new MenuPageItem { Title = "My Records", Icon = "menu_2.png", PageType = typeof(MainTabPageModel) });
             }
 
             if (!systemSettings.PortalDisableIncidents)
             {
-                MenuPageItems.Add(new MenuPageItem { Title = "Event Reports", Icon = "event_reports.png", PageType = typeof(DashboardPageModel) });
+                MenuPageItems.Add(new MenuPageItem { Title = "Event Reports", Icon = "menu_3.png", PageType = typeof(DashboardPageModel) });
             }
 
-            MenuPageItems.Add(new MenuPageItem { Title = "Offline", Icon = "offline.png", PageType = typeof(DashboardPageModel) });
+            MenuPageItems.Add(new MenuPageItem { Title = "Offline", Icon = "menu_4.png", PageType = typeof(DashboardPageModel) });
         }
     }
 }

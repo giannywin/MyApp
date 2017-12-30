@@ -32,6 +32,8 @@ namespace MyApp.PageModels
 
         public string CompanyName { get; set; }
 
+        public string WhiteLabellingLogo { get; set; }
+
         public string Message { get; set; }
 
         public ICommand OnLoginCommand { get; set; }
@@ -62,6 +64,7 @@ namespace MyApp.PageModels
             var systemSettings = await LoginService?.GetSystemSettings();
 
             CompanyName = systemSettings?.CompanyName;
+            WhiteLabellingLogo = systemSettings?.WhiteLabellingLogo;
         }
     }
 }

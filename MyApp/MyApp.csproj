@@ -123,6 +123,7 @@
     <Compile Include="Converters\SelectedItemEventArgsToSelectedItemConverter.cs" />
     <Compile Include="Models\MyTaskRecordType.cs" />
     <Compile Include="Converters\RecordTypeToImageResource.cs" />
+    <Compile Include="Converters\Base64ToImageResource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

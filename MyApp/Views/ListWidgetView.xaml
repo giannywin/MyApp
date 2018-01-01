@@ -13,6 +13,8 @@
     </ContentView.Resources>
 	<StackLayout Padding="0"
         VerticalOptions="FillAndExpand">
+        <Label Text="{Binding Source={x:Reference this}, Path=Title}"
+            Style="{StaticResource ListTitle}" />
         <ListView ItemsSource="{Binding Source={x:Reference this}, Path=ListResult.Records}"
             HasUnevenRows="true"
             SeparatorVisibility="None">

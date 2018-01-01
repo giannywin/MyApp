@@ -31,6 +31,8 @@ namespace MyApp.PageModels
 
         public ListResult<PortalListRecord> ListResult { get; set; }
 
+        public string ListTitle { get; set; }
+
         public ICommand ListNavigateCommand { get; set; }
 
         public override void Init(object initData)
@@ -39,6 +41,8 @@ namespace MyApp.PageModels
 
             User = initData as User;
             AppSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
+
+            ListTitle = "Incomplete";
 
             ListResult = new ListResult<PortalListRecord>
             {

@@ -72,6 +72,21 @@
                     Property="Color"
                     Value="{StaticResource PrimaryBlue}" />
             </Style>
+            <Style x:Key="ListTitle"
+                TargetType="Label">
+                <Setter
+                    Property="VerticalOptions"
+                    Value="Center" />
+                <Setter
+                    Property="HorizontalOptions"
+                    Value="StartAndExpand" />
+                <Setter
+                    Property="HorizontalTextAlignment"
+                    Value="Start" />
+                <Setter
+                    Property="FontSize"
+                    Value="16" />
+            </Style>
         </ResourceDictionary>
 	</Application.Resources>
 </Application>

@@ -11,6 +11,7 @@
                 <Label Text="{Binding User.FullName}" />
             </StackLayout>
             <views:ListWidgetView ListResult="{Binding ListResult}"
+                Title="{Binding ListTitle}"
                 HandleItemSelected="{Binding ListNavigateCommand}"
                 VerticalOptions="FillAndExpand">
             </views:ListWidgetView>

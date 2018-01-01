@@ -22,6 +22,17 @@ namespace MyApp.Views
             set { SetValue(ListResultProperty, value); }
         }
 
+        public static readonly BindableProperty TitleProperty = BindableProperty.Create(
+                                                  "Title", //Public name to use
+                                                  typeof(string), //this type
+                                                  typeof(ListWidgetView), //parent type (tihs control)
+                                                  null); //default value
+
+        public string Title {
+            get { return (string) GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
         public static readonly BindableProperty HandleItemSelectedProperty = BindableProperty.Create(
                                                   "HandleItemSelected", //Public name to use
                                                   typeof(ICommand), //this type

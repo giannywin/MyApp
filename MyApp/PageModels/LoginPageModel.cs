@@ -36,12 +36,16 @@ namespace MyApp.PageModels
 
         public string Message { get; set; }
 
+        public bool IsBusy { get; set; }
+
         public ICommand OnLoginCommand { get; set; }
 
         public User User { get; set; }
 
         public async Task Login()
         {
+            IsBusy = true;
+
             var loginResult = await LoginService?.Login(Username, Password);
 
             if (loginResult.User != null)
@@ -58,6 +62,8 @@ namespace MyApp.PageModels
             } else {
                 Message = loginResult.Error;
             }
+
+            IsBusy = false;
         }
 
         public async Task GetSystemSettings() {

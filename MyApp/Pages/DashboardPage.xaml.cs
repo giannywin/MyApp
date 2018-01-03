@@ -18,6 +18,8 @@ namespace MyApp.Pages
                 Loaded = true;
 
                 var vm = BindingContext as DashboardPageModel;
+
+                var result = vm.Get();
             }
         }
 

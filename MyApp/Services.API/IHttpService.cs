@@ -8,7 +8,7 @@ namespace MyApp.Services.API
     {
         Task<HttpResponseMessage> PostAsync(string url, Dictionary<string, string> parameters, bool refreshToken = true);
 
-        Task<HttpResponseMessage> GetAsync(string url, bool refreshToken = true);
+        Task<HttpResponseMessage> GetAsync(string url, Dictionary<string, object> queryParameters = null, bool refreshToken = true);
 
         string GetToken();
 

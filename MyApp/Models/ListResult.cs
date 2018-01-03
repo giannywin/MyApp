@@ -2,7 +2,7 @@
 {
     public class ListResult<T>
     {
-        public string RecordIds { get; set; }
+        public int[] RecordIds { get; set; }
 
         public int TotalCount { get; set; }
 

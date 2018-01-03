@@ -33,6 +33,18 @@ namespace MyApp.Views
             set { SetValue(TitleProperty, value); }
         }
 
+        public static readonly BindableProperty IsLoadingProperty = BindableProperty.Create(
+                                          "IsLoading", //Public name to use
+                                          typeof(bool), //this type
+                                          typeof(ListWidgetView), //parent type (tihs control)
+                                          false); //default value
+
+        public bool IsLoading
+        {
+            get { return (bool) GetValue(IsLoadingProperty); }
+            set { SetValue(IsLoadingProperty, value); }
+        }
+
         public static readonly BindableProperty HandleItemSelectedProperty = BindableProperty.Create(
                                                   "HandleItemSelected", //Public name to use
                                                   typeof(ICommand), //this type

@@ -1,4 +1,5 @@
-﻿using MyApp.Services.API;
+﻿using MyApp.Helpers;
+using MyApp.Services.API;
 using System.Threading.Tasks;
 using System.Net.Http;
 using MyApp.Models;
@@ -30,10 +31,14 @@ namespace MyApp.Services
             return response;
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string url, bool refreshToken = true) {
+        public async Task<HttpResponseMessage> GetAsync(string url, Dictionary<string, object> queryParameters = null, bool refreshToken = true) {
             var client = new HttpClient();
 
             AddAuthorizationHeader(client);
+
+            if (queryParameters != null && queryParameters.Count > 0) {
+                url += queryParameters.ToQueryString("?");
+            }
 
             var response = await client.GetAsync(url);
 

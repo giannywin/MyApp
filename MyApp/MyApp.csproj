@@ -124,6 +124,12 @@
     <Compile Include="Models\MyTaskRecordType.cs" />
     <Compile Include="Converters\RecordTypeToImageResource.cs" />
     <Compile Include="Converters\Base64ToImageResource.cs" />
+    <Compile Include="Services\AbstractService.cs" />
+    <Compile Include="Services.API\IService.cs" />
+    <Compile Include="Models\GetOptions.cs" />
+    <Compile Include="Helpers\DictionaryExtensions.cs" />
+    <Compile Include="Services\GenericService.cs" />
+    <Compile Include="Services.API\IGenericService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -166,6 +172,7 @@
     <Folder Include="Models\WidgetConfiguration\" />
     <Folder Include="Views\" />
     <Folder Include="Behaviors\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">

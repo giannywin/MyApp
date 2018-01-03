@@ -12,6 +12,7 @@
             </StackLayout>
             <views:ListWidgetView ListResult="{Binding ListResult}"
                 Title="{Binding ListTitle}"
+                IsLoading="{Binding IsLoading}"
                 HandleItemSelected="{Binding ListNavigateCommand}"
                 VerticalOptions="FillAndExpand">
             </views:ListWidgetView>

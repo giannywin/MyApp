@@ -81,6 +81,8 @@ namespace MyApp
                     genericMethod.Invoke(FreshIOC.Container, null);
                 }
             }
+
+            FreshTinyIOCBuiltIn.Current.Register(typeof(IGenericService<>), typeof(GenericService<>));
         }
     }
 }

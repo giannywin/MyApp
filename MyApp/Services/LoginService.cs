@@ -55,7 +55,7 @@ namespace MyApp.Services
         public async Task<SystemSettings> GetSystemSettings() {
             var appSettings = AppSettings;
 
-            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/portal/getportalsettings", false);
+            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/portal/getportalsettings", null, false);
 
             if (response.IsSuccessStatusCode)
             {

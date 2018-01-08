@@ -8,6 +8,10 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using Xamarin.Forms;
 using FreshMvvm;
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 
 namespace MyApp.PageModels
 {
@@ -20,7 +24,7 @@ namespace MyApp.PageModels
             AppSettingsService = coreServiceDependencies.AppSettingsService;
             PortalService = portalService;
 
-            ListNavigateCommand = new Command<ListRecord<PortalListRecord>>(ListNavigate);
+            WidgetOptions = new NotifyObservableCollection<object>();
         }
          
         protected internal IHttpService HttpService { get; set; }
@@ -33,15 +37,25 @@ namespace MyApp.PageModels
 
         public AppSettings AppSettings { get; set; }
 
-        public ListResult<PortalListRecord> ListResult { get; set; } = new ListResult<PortalListRecord>();
+        private NotifyObservableCollection<object> _widgetOptions;
+        public NotifyObservableCollection<object> WidgetOptions { 
+            get {
+                return _widgetOptions;
+            }
+            set {
+                    NotifyCollectionChangedEventHandler cceh = (sender, args) => NotifyPropertyChanged();
+                if (_widgetOptions != null) _widgetOptions.CollectionChanged -= cceh;
+                _widgetOptions = value;
+                _widgetOptions.CollectionChanged += cceh;
+            }
+        }
 
-        public string ListTitle { get; set; }
+        public new event PropertyChangedEventHandler PropertyChanged;
 
-        public ICommand ListNavigateCommand { get; set; }
-
-        public bool IsLoading { get; set; }
-
-        public bool IsLoaded { get; set; }
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public override void Init(object initData)
         {
@@ -50,7 +64,17 @@ namespace MyApp.PageModels
             User = initData as User;
             AppSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
 
-            ListTitle = "Incomplete";
+            WidgetOptions.Add(new WidgetOptions<PortalListRecord>
+            {
+                ListOptions = new ListOptions<PortalListRecord>
+                {
+                    IsLoading = false,
+                    Loaded = false,
+                    ListResults = new ListResult<PortalListRecord>(),
+                    ListNavigateCommand = new Command<ListRecord<PortalListRecord>>(ListNavigate),
+                    Title = "Incomplete"
+                }
+            });
         }
 
         public void ListNavigate(ListRecord<PortalListRecord> record)
@@ -75,21 +99,31 @@ namespace MyApp.PageModels
 
         public async Task Get()
         {
-            if (!IsLoaded) {
-                IsLoading = true;
-                
-                ListResult = await PortalService.Get(new GetOptions{
-                    Controller = "portal",
-                    Action = "mytasks",
-                    PageIndex = 1,
-                    PageSize = 10,
-                    ViewId = "1",
-                    QueryParameters = new Dictionary<string, object>{
+            if (WidgetOptions.Count == 0)
+                return;
+
+            var widgetOptions = WidgetOptions[0] as WidgetOptions<PortalListRecord>;
+
+            if (widgetOptions != null) {
+                if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Loaded) {
+                    widgetOptions.ListOptions.IsLoading = true;
+
+                    widgetOptions.ListOptions.ListResults = await PortalService.Get(new GetOptions
+                    {
+                        Controller = "portal",
+                        Action = "mytasks",
+                        PageIndex = 1,
+                        PageSize = 10,
+                        ViewId = "1",
+                        QueryParameters = new Dictionary<string, object>{
                         {"AssignedTo", 7},
                         {"status", 1}
-                    }});
+                    }
+                    });
 
-                IsLoading = false;
+                    widgetOptions.ListOptions.IsLoading = false;
+                    widgetOptions.ListOptions.Loaded = true;
+                }
             }
         }
     }

@@ -130,6 +130,9 @@
     <Compile Include="Helpers\DictionaryExtensions.cs" />
     <Compile Include="Services\GenericService.cs" />
     <Compile Include="Services.API\IGenericService.cs" />
+    <Compile Include="Models\NotifyObservableCollection.cs" />
+    <Compile Include="Models\WidgetConfiguration\WidgetOptions.cs" />
+    <Compile Include="Models\WidgetConfiguration\ListOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

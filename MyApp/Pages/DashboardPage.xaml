@@ -10,10 +10,10 @@
                 <Label Text="Welcome" />
                 <Label Text="{Binding User.FullName}" />
             </StackLayout>
-            <views:ListWidgetView ListResult="{Binding ListResult}"
-                Title="{Binding ListTitle}"
-                IsLoading="{Binding IsLoading}"
-                HandleItemSelected="{Binding ListNavigateCommand}"
+            <views:ListWidgetView ListResult="{Binding WidgetOptions[0].ListOptions.ListResults}"
+                Title="{Binding WidgetOptions[0].ListOptions.Title}"
+                IsLoading="{Binding WidgetOptions[0].ListOptions.IsLoading}"
+                HandleItemSelected="{Binding WidgetOptions[0].ListOptions.ListNavigateCommand}"
                 VerticalOptions="FillAndExpand">
             </views:ListWidgetView>
         </StackLayout>

@@ -133,6 +133,12 @@
     <Compile Include="Models\NotifyObservableCollection.cs" />
     <Compile Include="Models\WidgetConfiguration\WidgetOptions.cs" />
     <Compile Include="Models\WidgetConfiguration\ListOptions.cs" />
+    <Compile Include="Pages\MyTasksPage.cs" />
+    <Compile Include="PageModels\MyTasksPageModel.cs" />
+    <Compile Include="Models\WidgetConfiguration\MyTasksWidgetConfiguration.cs" />
+    <Compile Include="Pages\DashboardTwoPage.cs" />
+    <Compile Include="PageModels\DashboardTwoPageModel.cs" />
+    <Compile Include="Models\WidgetConfiguration\WidgetConfigurations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

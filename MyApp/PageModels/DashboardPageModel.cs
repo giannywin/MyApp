@@ -50,6 +50,8 @@ namespace MyApp.PageModels
             }
         }
 
+        public WidgetConfiguration WidgetConfiguration { get; set; }
+
         public new event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -61,7 +63,8 @@ namespace MyApp.PageModels
         {
             base.Init(initData);
 
-            User = initData as User;
+            WidgetConfiguration = initData as WidgetConfiguration;
+            User = new User { FullName = WidgetConfiguration.PageTitle };
             AppSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
 
             WidgetOptions.Add(new WidgetOptions<PortalListRecord>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MyApp.Models;
 using System.ComponentModel;
 using FreshMvvm;
+using MyApp.Models.WidgetConfiguration;
 
 namespace MyApp.PageModels
 {
@@ -52,7 +53,7 @@ namespace MyApp.PageModels
             {
                 var masterDetailPage = (MasterDetailPage) FreshPageModelResolver.ResolvePageModel<MainPageModel>();
 
-                await App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel<DashboardPageModel>(loginResult.User));
+                await App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel<DashboardPageModel>(WidgetConfigurations.MyTasksWidgetConfiguration));
 
                 masterDetailPage.Detail = App.NavigationPage;
 

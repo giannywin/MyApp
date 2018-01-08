@@ -23,6 +23,6 @@ namespace MyApp.Pages
             }
         }
 
-        private bool Loaded { get; set; }
+        protected internal virtual bool Loaded { get; set; }
     }
 }

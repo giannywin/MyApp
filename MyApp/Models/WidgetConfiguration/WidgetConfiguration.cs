@@ -2,13 +2,13 @@
 {
     public class WidgetConfiguration
     {
-        public string PageTitle { get; set; }
+        public virtual string PageTitle { get; set; }
 
-        public bool ShowTabs { get; set; }
+        public virtual bool ShowTabs { get; set; }
 
-        public bool FullScreen { get; set; }
+        public virtual bool FullScreen { get; set; }
 
-        public WidgetAction FabAddButton { get; set; }
+        public virtual WidgetAction FabAddButton { get; set; }
 
         public WidgetTab[] Tabs { get; set; }
     }

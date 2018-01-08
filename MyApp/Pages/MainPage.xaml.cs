@@ -3,6 +3,7 @@ using MyApp.Models;
 using MyApp.PageModels;
 using Xamarin.Forms;
 using FreshMvvm;
+using MyApp.Models.WidgetConfiguration;
 
 namespace MyApp.Pages
 {
@@ -30,7 +31,7 @@ namespace MyApp.Pages
         {
             var item = (MenuPageItem) e.SelectedItem;
             var viewModel = BindingContext as MainPageModel;
-            App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel(item.PageType, (object) new User { FullName = item.Title }));
+            App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel(item.PageType, (object) WidgetConfigurations.MyTasksWidgetConfiguration));
             IsPresented = false;
         }
 

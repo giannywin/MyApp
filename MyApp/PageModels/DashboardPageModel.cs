@@ -5,11 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyApp.Services.API;
 using Newtonsoft.Json;
-using System.Windows.Input;
 using Xamarin.Forms;
 using FreshMvvm;
-using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 
@@ -116,21 +113,23 @@ namespace MyApp.PageModels
             if (WidgetOptions.Count == 0)
                 return;
 
+            var index = 0;
             foreach(var widgetOptions in WidgetOptions) {
                 var widgetOptionsTemp = widgetOptions as WidgetOptions<PortalListRecord>;
                 if (widgetOptionsTemp != null) {
-                    var b = GetListResults(widgetOptionsTemp);
+                    var b = GetListResults(widgetOptionsTemp, index);
                 }
+                ++index;
             }
         }
 
-        public async Task GetListResults<T>(WidgetOptions<T> widgetOptions) {
+        public async Task GetListResults<T>(WidgetOptions<T> widgetOptions, int index) {
             if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Loaded)
             {
                 widgetOptions.ListOptions.IsLoading = true;
 
                 var service = FreshTinyIOCBuiltIn.Current.Resolve<IGenericService<T>>();
-
+                 
                 widgetOptions.ListOptions.ListResults = await service.Get(new GetOptions
                 {
                     Controller = "portal",
@@ -146,6 +145,8 @@ namespace MyApp.PageModels
 
                 widgetOptions.ListOptions.IsLoading = false;
                 widgetOptions.ListOptions.Loaded = true;
+
+                WidgetOptions[index] = widgetOptions;
             }
         }
     }

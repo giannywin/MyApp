@@ -12,6 +12,6 @@
 
         public WidgetAction[] OfflineActions { get; set; }
 
-        public ListWidgetView[] Views { get; set; }
+        public WidgetView[] Views { get; set; }
     }
 }

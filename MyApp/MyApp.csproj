@@ -107,7 +107,7 @@
     <Compile Include="Models\WidgetConfiguration\ListWidget.cs" />
     <Compile Include="Models\WidgetConfiguration\WidgetProperty.cs" />
     <Compile Include="Models\WidgetConfiguration\WidgetPropertyType.cs" />
-    <Compile Include="Models\WidgetConfiguration\ListWidgetView.cs" />
+    <Compile Include="Models\WidgetConfiguration\WidgetView.cs" />
     <Compile Include="Models\WidgetConfiguration\WidgetAction.cs" />
     <Compile Include="Models\WidgetConfiguration\IWidget.cs" />
     <Compile Include="Models\WidgetConfiguration\WidgetConfiguration.cs" />

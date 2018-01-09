@@ -78,6 +78,17 @@ namespace MyApp.PageModels
                     Title = "Incomplete"
                 }
             });
+            WidgetOptions.Add(new WidgetOptions<PortalListRecord>
+            {
+                ListOptions = new ListOptions<PortalListRecord>
+                {
+                    IsLoading = false,
+                    Loaded = false,
+                    ListResults = new ListResult<PortalListRecord>(),
+                    ListNavigateCommand = new Command<ListRecord<PortalListRecord>>(ListNavigate),
+                    Title = "Complete"
+                }
+            });
         }
 
         public void ListNavigate(ListRecord<PortalListRecord> record)
@@ -105,28 +116,36 @@ namespace MyApp.PageModels
             if (WidgetOptions.Count == 0)
                 return;
 
-            var widgetOptions = WidgetOptions[0] as WidgetOptions<PortalListRecord>;
+            foreach(var widgetOptions in WidgetOptions) {
+                var widgetOptionsTemp = widgetOptions as WidgetOptions<PortalListRecord>;
+                if (widgetOptionsTemp != null) {
+                    var b = GetListResults(widgetOptionsTemp);
+                }
+            }
+        }
 
-            if (widgetOptions != null) {
-                if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Loaded) {
-                    widgetOptions.ListOptions.IsLoading = true;
+        public async Task GetListResults<T>(WidgetOptions<T> widgetOptions) {
+            if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Loaded)
+            {
+                widgetOptions.ListOptions.IsLoading = true;
 
-                    widgetOptions.ListOptions.ListResults = await PortalService.Get(new GetOptions
-                    {
-                        Controller = "portal",
-                        Action = "mytasks",
-                        PageIndex = 1,
-                        PageSize = 10,
-                        ViewId = "1",
-                        QueryParameters = new Dictionary<string, object>{
+                var service = FreshTinyIOCBuiltIn.Current.Resolve<IGenericService<T>>();
+
+                widgetOptions.ListOptions.ListResults = await service.Get(new GetOptions
+                {
+                    Controller = "portal",
+                    Action = "mytasks",
+                    PageIndex = 1,
+                    PageSize = 10,
+                    ViewId = "1",
+                    QueryParameters = new Dictionary<string, object>{
                         {"AssignedTo", 7},
                         {"status", 1}
                     }
-                    });
+                });
 
-                    widgetOptions.ListOptions.IsLoading = false;
-                    widgetOptions.ListOptions.Loaded = true;
-                }
+                widgetOptions.ListOptions.IsLoading = false;
+                widgetOptions.ListOptions.Loaded = true;
             }
         }
     }

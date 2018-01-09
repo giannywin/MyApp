@@ -1,6 +1,6 @@
 ﻿namespace MyApp.Models.WidgetConfiguration
 {
-    public class ListWidgetView
+    public class WidgetView
     {
         public int Id { get; set; }
 

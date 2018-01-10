@@ -1,4 +1,6 @@
-﻿namespace MyApp.Models.WidgetConfiguration
+﻿using System;
+
+namespace MyApp.Models.WidgetConfiguration
 {
     public class Widget
     {
@@ -9,5 +11,7 @@
         public string Title { get; set; }
 
         public bool Collapsed { get; set; }
+
+        public Type ListType { get; set; }
     }
 }

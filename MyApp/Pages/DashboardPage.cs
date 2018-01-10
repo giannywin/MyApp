@@ -5,12 +5,8 @@ using Xamarin.Forms;
 
 namespace MyApp.Pages
 {
-    public class DashboardTwoPage : ContentPage
+    public class DashboardPage : ContentPage
     {
-        public DashboardTwoPage()
-        {
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -39,7 +35,7 @@ namespace MyApp.Pages
 
                 Content = mainStackLayout;
 
-                var result = vm.Get();
+                var result = vm.LoadWidgets();
             }
         }
 

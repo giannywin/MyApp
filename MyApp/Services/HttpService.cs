@@ -37,7 +37,7 @@ namespace MyApp.Services
             AddAuthorizationHeader(client);
 
             if (queryParameters != null && queryParameters.Count > 0) {
-                url += queryParameters.ToQueryString("?");
+                url += queryParameters.ToQueryString(url.Contains("?") ? "&" : "?");
             }
 
             var response = await client.GetAsync(url);

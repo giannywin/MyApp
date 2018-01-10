@@ -46,6 +46,23 @@ namespace MyApp.Models.WidgetConfiguration
             }
         }
 
+        bool _initialized;
+        public bool Initialized
+        {
+            get
+            {
+                return _initialized;
+            }
+            set
+            {
+                if (_initialized != value)
+                {
+                    _initialized = value;
+                    OnPropertyChanged("Initialized");
+                }
+            }
+        }
+
         ICommand _listNavigateCommand;
         public ICommand ListNavigateCommand
         {
@@ -93,6 +110,108 @@ namespace MyApp.Models.WidgetConfiguration
                 {
                     _title = value;
                     OnPropertyChanged("Title");
+                }
+            }
+        }
+
+        private bool _mobileLayout;
+        public bool MobileLayout
+        {
+            get
+            {
+                return _mobileLayout;
+            }
+            set
+            {
+                if (_mobileLayout != value)
+                {
+                    _mobileLayout = value;
+                    OnPropertyChanged("MobileLayout");
+                }
+            }
+        }
+
+        private string _selectedViewId;
+        public string SelectedViewId
+        {
+            get
+            {
+                return _selectedViewId;
+            }
+            set
+            {
+                if (_selectedViewId != value)
+                {
+                    _selectedViewId = value;
+                    OnPropertyChanged("SelectedViewId");
+                }
+            }
+        }
+
+        private string _url;
+        public string Url
+        {
+            get
+            {
+                return _url;
+            }
+            set
+            {
+                if (_url != value)
+                {
+                    _url = value;
+                    OnPropertyChanged("Url");
+                }
+            }
+        }
+
+        private WidgetAction _rowClickAction;
+        public WidgetAction RowClickAction
+        {
+            get
+            {
+                return _rowClickAction;
+            }
+            set
+            {
+                if (_rowClickAction != value)
+                {
+                    _rowClickAction = value;
+                    OnPropertyChanged("RowClickAction");
+                }
+            }
+        }
+
+        private WidgetAction[] _offlineActions;
+        public WidgetAction[] OfflineActions
+        {
+            get
+            {
+                return _offlineActions;
+            }
+            set
+            {
+                if (_offlineActions != value)
+                {
+                    _offlineActions = value;
+                    OnPropertyChanged("OfflineActions");
+                }
+            }
+        }
+
+        private WidgetView[] _views;
+        public WidgetView[] Views
+        {
+            get
+            {
+                return _views;
+            }
+            set
+            {
+                if (_views != value)
+                {
+                    _views = value;
+                    OnPropertyChanged("Views");
                 }
             }
         }

@@ -3,12 +3,15 @@ using MyApp.Models.WidgetConfiguration;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Reflection;
 using MyApp.Services.API;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 using FreshMvvm;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
+using MyApp.Helpers;
+using System;
+using System.Linq;
 
 namespace MyApp.PageModels
 {
@@ -64,67 +67,135 @@ namespace MyApp.PageModels
             User = new User { FullName = WidgetConfiguration.PageTitle };
             AppSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
 
-            WidgetOptions.Add(new WidgetOptions<PortalListRecord>
-            {
-                ListOptions = new ListOptions<PortalListRecord>
-                {
-                    IsLoading = false,
-                    Loaded = false,
-                    ListResults = new ListResult<PortalListRecord>(),
-                    ListNavigateCommand = new Command<ListRecord<PortalListRecord>>(ListNavigate),
-                    Title = "Incomplete"
-                }
-            });
-            WidgetOptions.Add(new WidgetOptions<PortalListRecord>
-            {
-                ListOptions = new ListOptions<PortalListRecord>
-                {
-                    IsLoading = false,
-                    Loaded = false,
-                    ListResults = new ListResult<PortalListRecord>(),
-                    ListNavigateCommand = new Command<ListRecord<PortalListRecord>>(ListNavigate),
-                    Title = "Complete"
-                }
-            });
+            InitWidgets();
         }
 
-        public void ListNavigate(ListRecord<PortalListRecord> record)
+        public void InitWidgets() {
+            var widgets = WidgetConfiguration?.Tabs?[0]?.Widgets;
+            if (widgets != null) {
+                for (var i = 0; i < widgets.Length; ++i) {
+                    var widget = widgets[i];
+
+                    switch(widget.WidgetType) {
+                        case WidgetType.List:
+                            InitListWidget(widget);
+                            break;
+                        case WidgetType.Form:
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void InitListWidget(Widget widget) {
+            var type = widget.ListType ?? ModelUtils.ResolveType(widget.ListId);
+
+            var widgetOptionsType = typeof(WidgetOptions<>).MakeGenericType(type);
+            var listOptionsType = typeof(ListOptions<>).MakeGenericType(type);
+            var listResultType = typeof(ListResult<>).MakeGenericType(type);
+            var listRecordType = typeof(ListRecord<>).MakeGenericType(type);
+            var listNavigateCommandType = typeof(Command<>).MakeGenericType(listRecordType);
+
+            var widgetOptions = Activator.CreateInstance(widgetOptionsType);
+            var listOptions = Activator.CreateInstance(listOptionsType);
+            var listResults = Activator.CreateInstance(listResultType);
+
+            var listOptionsIsLoadingProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("IsLoading");
+            listOptionsIsLoadingProperty?.SetValue(listOptions, false);
+
+            var listOptionsLoadedProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("Loaded");
+            listOptionsLoadedProperty?.SetValue(listOptions, false);
+
+            var listOptionsListResultsProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("ListResults");
+            listOptionsListResultsProperty?.SetValue(listOptions, listResults);
+
+            var widgetOptionslistOptionsProperty = widgetOptionsType.GetTypeInfo().GetDeclaredProperty("ListOptions");
+            widgetOptionslistOptionsProperty?.SetValue(widgetOptions, listOptions);
+
+            WidgetOptions.Add(widgetOptions);
+        }
+
+        public async Task LoadWidgets() {
+            var widgets = WidgetConfiguration?.Tabs?[0]?.Widgets;
+            if (widgets != null)
+            {
+                for (var i = 0; i < widgets.Length; ++i)
+                {
+                    var widget = widgets[i];
+
+                    switch (widget.WidgetType)
+                    {
+                        case WidgetType.List:
+                            LoadListWidget(widget, i);
+                            break;
+                        case WidgetType.Form:
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void LoadListWidget(Widget widget, int index) {
+            var type = widget.ListType ?? ModelUtils.ResolveType(widget.ListId);
+
+            var getListOptionsMethod = GetType().GetTypeInfo().DeclaredMethods.FirstOrDefault(s => s.Name == "GetListOptions");
+            var genericGetListOptionsMethod = getListOptionsMethod.MakeGenericMethod(type);
+
+            var widgetOptionsType = typeof(WidgetOptions<>).MakeGenericType(type);
+            var listOptionsType = typeof(ListOptions<>).MakeGenericType(type);
+            var listResultType = typeof(ListResult<>).MakeGenericType(type);
+            var listRecordType = typeof(ListRecord<>).MakeGenericType(type);
+            var listNavigateCommandType = typeof(Command<>).MakeGenericType(listRecordType);
+
+            var widgetOptions = Activator.CreateInstance(widgetOptionsType);
+            var listOptions = Activator.CreateInstance(listOptionsType);
+            var listResults = Activator.CreateInstance(listResultType);
+
+            var listOptionsIsLoadingProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("IsLoading");
+            listOptionsIsLoadingProperty?.SetValue(listOptions, false);
+
+            var listOptionsLoadedProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("Loaded");
+            listOptionsLoadedProperty?.SetValue(listOptions, false);
+
+            var listOptionsListResultsProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("ListResults");
+            listOptionsListResultsProperty?.SetValue(listOptions, listResults);
+
+            var widgetOptionslistOptionsProperty = widgetOptionsType.GetTypeInfo().GetDeclaredProperty("ListOptions");
+            widgetOptionslistOptionsProperty?.SetValue(widgetOptions, listOptions);
+
+            WidgetOptions.Add(widgetOptions);
+
+            var result = genericGetListOptionsMethod.Invoke(this, new object[] { widget, index });
+        }
+
+        public void ListNavigate<T>(ListRecord<T> record)
         {
             App.NavigationPage.PushAsync(FreshPageModelResolver.ResolvePageModel<MainTabPageModel>());
         }
 
-        public async Task<ListWidget> GetListWidget() {
+        public async Task GetListOptions<T>(Widget widget, int index) {
+            var widgetOptions = WidgetOptions[index] as WidgetOptions<T>;
+            if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Initialized) {
+                widgetOptions.ListOptions.IsLoading = true;
 
-            var appSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
-            var response = await HttpService.GetAsync($"{appSettings?.Api}/assets/json/list-configs/my-tasks-incomplete-config.json");
+                widgetOptions.ListOptions.IsLoading = true;
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var listWidget = JsonConvert.DeserializeObject<ListWidget>(content);
+                var service = FreshTinyIOCBuiltIn.Current.Resolve<IGenericService<T>>();
 
-                return listWidget;
-            }
-            return null;
-        }
+                widgetOptions.ListOptions = await service.ListOptions(widget);
+                widgetOptions.ListOptions.IsLoading = true;
+                widgetOptions.ListOptions.Initialized = true;
+                widgetOptions.ListOptions.ListNavigateCommand = new Command<ListRecord<T>>(ListNavigate);
+                widgetOptions.ListOptions.Title = widget.Title;
 
-        public async Task Get()
-        {
-            if (WidgetOptions.Count == 0)
-                return;
+                WidgetOptions[index] = widgetOptions;
 
-            var index = 0;
-            foreach(var widgetOptions in WidgetOptions) {
-                var widgetOptionsTemp = widgetOptions as WidgetOptions<PortalListRecord>;
-                if (widgetOptionsTemp != null) {
-                    var b = GetListResults(widgetOptionsTemp, index);
-                }
-                ++index;
+                var result = GetListResults(widgetOptions, index);
             }
         }
 
         public async Task GetListResults<T>(WidgetOptions<T> widgetOptions, int index) {
-            if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Loaded)
+            if (widgetOptions.ListOptions.Initialized && !widgetOptions.ListOptions.Loaded)
             {
                 widgetOptions.ListOptions.IsLoading = true;
 
@@ -132,14 +203,12 @@ namespace MyApp.PageModels
                  
                 widgetOptions.ListOptions.ListResults = await service.Get(new GetOptions
                 {
-                    Controller = "portal",
-                    Action = "mytasks",
+                    Url = widgetOptions.ListOptions.Url,
                     PageIndex = 1,
                     PageSize = 10,
-                    ViewId = "1",
+                    ViewId = widgetOptions.ListOptions.SelectedViewId,
                     QueryParameters = new Dictionary<string, object>{
-                        {"AssignedTo", 7},
-                        {"status", 1}
+                        {"AssignedTo", 7}
                     }
                 });
 

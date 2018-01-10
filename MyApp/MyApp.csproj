@@ -33,10 +33,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\DashboardPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Include="Pages\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -71,9 +67,6 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageModels\LoginPageModel.cs" />
-    <Compile Include="Pages\DashboardPage.xaml.cs">
-      <DependentUpon>DashboardPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PageModels\DashboardPageModel.cs" />
     <Compile Include="Services\CoreServiceDependencies.cs" />
     <Compile Include="Services\AppSettingsService.cs" />
@@ -135,10 +128,9 @@
     <Compile Include="Models\WidgetConfiguration\ListOptions.cs" />
     <Compile Include="Pages\MyTasksPage.cs" />
     <Compile Include="PageModels\MyTasksPageModel.cs" />
-    <Compile Include="Models\WidgetConfiguration\MyTasksWidgetConfiguration.cs" />
-    <Compile Include="Pages\DashboardTwoPage.cs" />
-    <Compile Include="PageModels\DashboardTwoPageModel.cs" />
+    <Compile Include="Pages\DashboardPage.cs" />
     <Compile Include="Models\WidgetConfiguration\WidgetConfigurations.cs" />
+    <Compile Include="Helpers\ModelUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

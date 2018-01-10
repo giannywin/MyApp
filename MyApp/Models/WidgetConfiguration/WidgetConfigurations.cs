@@ -16,13 +16,15 @@ namespace MyApp.Models.WidgetConfiguration
                             ListId = "my-tasks-incomplete-config.json",
                             WidgetType = WidgetType.List,
                             Title = "MG-113",
-                            Collapsed = false
+                            Collapsed = false,
+                            ListType = typeof(PortalListRecord)
                         },
                         new Widget {
                             ListId = "my-tasks-complete-config.json",
                             WidgetType = WidgetType.List,
                             Title = "MG-114",
-                            Collapsed = false
+                            Collapsed = false,
+                            ListType = typeof(PortalListRecord)
                         }
                     }
                 }

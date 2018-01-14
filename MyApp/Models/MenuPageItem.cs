@@ -1,4 +1,5 @@
 ﻿using System;
+using MyApp.Models.Widgets;
 
 namespace MyApp.Models
 {
@@ -9,5 +10,7 @@ namespace MyApp.Models
         public string Icon { get; set; }
 
         public Type PageType { get; set; }
+
+        public WidgetConfiguration WidgetConfiguration { get; set; }
     }
 }

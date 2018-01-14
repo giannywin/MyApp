@@ -1,4 +1,4 @@
-﻿using MyApp.Models.WidgetConfiguration;
+﻿using MyApp.Models.Widgets;
 using MyApp.PageModels;
 using MyApp.Views;
 using Xamarin.Forms;
@@ -21,13 +21,13 @@ namespace MyApp.Pages
                 {
                     Orientation = StackOrientation.Vertical
                 };
-                var titleStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-                var welcomeLabel = new Label { Text = "Welcome" };
-                titleStackLayout.Children.Add(welcomeLabel);
 
-                var usernameLabel = new Label();
-                usernameLabel.SetBinding(Label.TextProperty, "WidgetConfiguration.PageTitle");
-                titleStackLayout.Children.Add(usernameLabel);
+                var titleStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+
+                var titleLabel = new Label();
+                titleLabel.SetBinding(Label.TextProperty, "WidgetConfiguration.PageTitle");
+
+                titleStackLayout.Children.Add(titleLabel);
 
                 mainStackLayout.Children.Add(titleStackLayout);
 
@@ -62,6 +62,13 @@ namespace MyApp.Pages
             listWidget.SetBinding(ListWidgetView.TitleProperty, $"WidgetOptions[{index}].ListOptions.Title");
             listWidget.SetBinding(ListWidgetView.IsLoadingProperty, $"WidgetOptions[{index}].ListOptions.IsLoading");
             listWidget.SetBinding(ListWidgetView.HandleItemSelectedProperty, $"WidgetOptions[{index}].ListOptions.ListNavigateCommand");
+            listWidget.SetBinding(ListWidgetView.DetailPropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].DetailProperty.PropertyName");
+            listWidget.SetBinding(ListWidgetView.SubDetailPropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].SubDetailProperty.PropertyName");
+            listWidget.SetBinding(ListWidgetView.TitlePropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].TitleProperty.PropertyName");
+            listWidget.SetBinding(ListWidgetView.SummaryPropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].SummaryProperty.PropertyName");
+            listWidget.SetBinding(ListWidgetView.SubTitlePropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].SubTitleProperty.PropertyName");
+            listWidget.SetBinding(ListWidgetView.DetailLabelPropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].DetailLabel");
+            listWidget.SetBinding(ListWidgetView.SubTitleLabelPropertyNameProperty, $"WidgetOptions[{index}].ListOptions.Views[0].SubTitleLabel");
             stackLayout.Children.Add(listWidget);
         }
 

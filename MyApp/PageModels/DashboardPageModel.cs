@@ -1,5 +1,5 @@
 ﻿using MyApp.Models;
-using MyApp.Models.WidgetConfiguration;
+using MyApp.Models.Widgets;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -150,6 +150,7 @@ namespace MyApp.PageModels
             var widgetOptions = Activator.CreateInstance(widgetOptionsType);
             var listOptions = Activator.CreateInstance(listOptionsType);
             var listResults = Activator.CreateInstance(listResultType);
+            var views = new WidgetView[] { new WidgetView { TitleProperty = new WidgetProperty { PropertyName = "Title" } } };
 
             var listOptionsIsLoadingProperty = listOptionsType.GetTypeInfo().GetDeclaredProperty("IsLoading");
             listOptionsIsLoadingProperty?.SetValue(listOptions, false);
@@ -176,8 +177,6 @@ namespace MyApp.PageModels
         public async Task GetListOptions<T>(Widget widget, int index) {
             var widgetOptions = WidgetOptions[index] as WidgetOptions<T>;
             if (!widgetOptions.ListOptions.IsLoading && !widgetOptions.ListOptions.Initialized) {
-                widgetOptions.ListOptions.IsLoading = true;
-
                 widgetOptions.ListOptions.IsLoading = true;
 
                 var service = FreshTinyIOCBuiltIn.Current.Resolve<IGenericService<T>>();
@@ -208,7 +207,6 @@ namespace MyApp.PageModels
                     PageSize = 10,
                     ViewId = widgetOptions.ListOptions.SelectedViewId,
                     QueryParameters = new Dictionary<string, object>{
-                        {"AssignedTo", 7}
                     }
                 });
 

@@ -2,6 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="MyApp.Views.ListWidgetView"
+    xmlns:views="clr-namespace:MyApp.Views"
     xmlns:converters="clr-namespace:MyApp.Converters"
     xmlns:behaviors="clr-namespace:MyApp.Behaviors"
     x:Name="this">
@@ -29,27 +30,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <ContentView>
-                            <StackLayout Orientation="Horizontal" Padding="5,10,5,10">
-                                <Image Source="{Binding Record.RecordType, Converter={StaticResource recordTypeToImageResource}}"
-                                        Aspect="AspectFill"
-                                        Style="{StaticResource ListWidgetIcon}" />
-                                <StackLayout Orientation="Vertical">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Record.Title}" />
-                                        <Label Text="{Binding Record.SubTitleLabel}" />
-                                        <Label Text="{Binding Record.SubTitle}" />
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Record.SubDetail}" />
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Record.DetailLabel}" />
-                                        <Label Text="{Binding Record.Detail}" />
-                                    </StackLayout>
-                                </StackLayout>
-                            </StackLayout>
-                        </ContentView>
+                        <views:ListWidgetMobileView Record="{Binding Record}"
+                            TitlePropertyName="{Binding Source={x:Reference this}, Path=TitlePropertyName}"
+                            SubTitlePropertyName="{Binding Source={x:Reference this}, Path=SubTitlePropertyName}"
+                            SubTitleLabelPropertyName="{Binding Source={x:Reference this}, Path=SubTitleLabelPropertyName}"
+                            DetailPropertyName="{Binding Source={x:Reference this}, Path=DetailPropertyName}"
+                            DetailLabelPropertyName="{Binding Source={x:Reference this}, Path=DetailLabelPropertyName}"
+                            SubDetailPropertyName="{Binding Source={x:Reference this}, Path=SubDetailPropertyName}"
+                            SummaryPropertyName="{Binding Source={x:Reference this}, Path=SummaryPropertyName}"
+                            VerticalOptions="FillAndExpand">
+                        </views:ListWidgetMobileView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

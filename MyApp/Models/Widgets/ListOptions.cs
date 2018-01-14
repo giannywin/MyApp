@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace MyApp.Models.WidgetConfiguration
+namespace MyApp.Models.Widgets
 {
     public class ListOptions<T> : INotifyPropertyChanged
     {

@@ -3,7 +3,7 @@ using MyApp.PageModels;
 using Xamarin.Forms;
 using FreshMvvm;
 using MyApp.Models;
-using MyApp.Models.WidgetConfiguration;
+using MyApp.Models.Widgets;
 
 namespace MyApp.Pages
 {

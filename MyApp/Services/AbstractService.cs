@@ -2,7 +2,7 @@
 using MyApp.Services.API;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using MyApp.Models.WidgetConfiguration;
+using MyApp.Models.Widgets;
 
 namespace MyApp.Services
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MyApp.Models.WidgetConfiguration
+namespace MyApp.Models.Widgets
 {
     public class WidgetAction
     {

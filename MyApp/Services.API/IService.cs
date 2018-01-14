@@ -1,6 +1,6 @@
 ﻿using MyApp.Models;
 using System.Threading.Tasks;
-using MyApp.Models.WidgetConfiguration;
+using MyApp.Models.Widgets;
 
 namespace MyApp.Services.API
 {

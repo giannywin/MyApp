@@ -5,6 +5,7 @@ using System.Net.Http;
 using MyApp.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using ModernHttpClient;
 
 namespace MyApp.Services
 {
@@ -18,7 +19,7 @@ namespace MyApp.Services
 
         public async Task<HttpResponseMessage> PostAsync(string url, Dictionary<string, string> parameters, bool refreshToken = true)
         {
-            var client = new HttpClient();
+            var client = new HttpClient(new NativeMessageHandler());
 
             AddAuthorizationHeader(client);
 
@@ -32,7 +33,7 @@ namespace MyApp.Services
         }
 
         public async Task<HttpResponseMessage> GetAsync(string url, Dictionary<string, object> queryParameters = null, bool refreshToken = true) {
-            var client = new HttpClient();
+            var client = new HttpClient(new NativeMessageHandler());
 
             AddAuthorizationHeader(client);
 

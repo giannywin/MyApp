@@ -1,4 +1,4 @@
-﻿namespace MyApp.Models.WidgetConfiguration
+﻿namespace MyApp.Models.Widgets
 {
     public enum WidgetType
     {

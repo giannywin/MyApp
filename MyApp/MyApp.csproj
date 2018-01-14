@@ -53,6 +53,10 @@
     <EmbeddedResource Include="Assets\Images\record_type_6.png" />
     <EmbeddedResource Include="Assets\Images\record_type_7.png" />
     <EmbeddedResource Include="Assets\Images\record_type_8.png" />
+    <EmbeddedResource Include="Views\ListWidgetMobileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -97,16 +101,16 @@
     <Compile Include="Converters\StringToImageResource.cs" />
     <Compile Include="PageModels\MainTabPageModel.cs" />
     <Compile Include="Pages\MainTabPage.cs" />
-    <Compile Include="Models\WidgetConfiguration\ListWidget.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetProperty.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetPropertyType.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetView.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetAction.cs" />
-    <Compile Include="Models\WidgetConfiguration\IWidget.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetConfiguration.cs" />
-    <Compile Include="Models\WidgetConfiguration\Widget.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetType.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetTab.cs" />
+    <Compile Include="Models\Widgets\ListWidget.cs" />
+    <Compile Include="Models\Widgets\WidgetProperty.cs" />
+    <Compile Include="Models\Widgets\WidgetPropertyType.cs" />
+    <Compile Include="Models\Widgets\WidgetView.cs" />
+    <Compile Include="Models\Widgets\WidgetAction.cs" />
+    <Compile Include="Models\Widgets\IWidget.cs" />
+    <Compile Include="Models\Widgets\WidgetConfiguration.cs" />
+    <Compile Include="Models\Widgets\Widget.cs" />
+    <Compile Include="Models\Widgets\WidgetType.cs" />
+    <Compile Include="Models\Widgets\WidgetTab.cs" />
     <Compile Include="Views\ListWidgetView.xaml.cs">
       <DependentUpon>ListWidgetView.xaml</DependentUpon>
     </Compile>
@@ -124,13 +128,17 @@
     <Compile Include="Services\GenericService.cs" />
     <Compile Include="Services.API\IGenericService.cs" />
     <Compile Include="Models\NotifyObservableCollection.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetOptions.cs" />
-    <Compile Include="Models\WidgetConfiguration\ListOptions.cs" />
+    <Compile Include="Models\Widgets\WidgetOptions.cs" />
+    <Compile Include="Models\Widgets\ListOptions.cs" />
     <Compile Include="Pages\MyTasksPage.cs" />
     <Compile Include="PageModels\MyTasksPageModel.cs" />
     <Compile Include="Pages\DashboardPage.cs" />
-    <Compile Include="Models\WidgetConfiguration\WidgetConfigurations.cs" />
+    <Compile Include="Models\Widgets\WidgetConfigurations.cs" />
     <Compile Include="Helpers\ModelUtils.cs" />
+    <Compile Include="Views\ListWidgetMobileView.xaml.cs">
+      <DependentUpon>ListWidgetMobileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -154,6 +162,9 @@
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.2.2.4.0\lib\netstandard1.0\PropertyChanged.dll</HintPath>
     </Reference>
+    <Reference Include="ModernHttpClient">
+      <HintPath>..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -170,7 +181,7 @@
     <Folder Include="Assets\" />
     <Folder Include="Converters\" />
     <Folder Include="Assets\Images\" />
-    <Folder Include="Models\WidgetConfiguration\" />
+    <Folder Include="Models\Widgets\" />
     <Folder Include="Views\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Helpers\" />

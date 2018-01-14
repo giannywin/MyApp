@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyApp.Models.WidgetConfiguration
+namespace MyApp.Models.Widgets
 {
     public class Widget
     {

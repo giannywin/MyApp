@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MyApp.Models;
 using System.ComponentModel;
 using FreshMvvm;
-using MyApp.Models.WidgetConfiguration;
+using MyApp.Models.Widgets;
 
 namespace MyApp.PageModels
 {

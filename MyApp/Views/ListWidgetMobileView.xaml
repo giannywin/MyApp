@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MyApp.Views.ListWidgetMobileView"
+        xmlns:behaviors="clr-namespace:MyApp.Behaviors"
+        xmlns:converters="clr-namespace:MyApp.Converters"
+    x:Name="this">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="selectedItemConverter" />
+            <converters:RecordTypeToImageResource x:Key="recordTypeToImageResource" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+	<ContentView.Content>
+        <StackLayout Orientation="Horizontal" Padding="5,10,5,10">
+            <Image Source="{Binding Record.RecordType, Converter={StaticResource recordTypeToImageResource}}"
+                    Aspect="AspectFill"
+                    Style="{StaticResource ListWidgetIcon}" />
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Label x:Name="title" />
+                    <Label x:Name="subTitleLabel" />
+                    <Label x:Name="subTitle" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label x:Name="subDetail" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label x:Name="detailLabel" />
+                    <Label x:Name="detail" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+	</ContentView.Content>
+</ContentView>

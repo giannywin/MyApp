@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using MyApp.Models;
 using MyApp.Models.Login;
 using MyApp.Services.API;
-using Newtonsoft.Json;
 
 namespace MyApp.Services
 {
@@ -16,19 +15,14 @@ namespace MyApp.Services
         {
             var appSettings = AppSettings;
 
-            var response = await HttpService.PostAsync($"{appSettings?.Api}/api/token",
+            var tokenResponse = await HttpService.PostAsync<TokenResponse>($"{appSettings?.Api}/api/token",
                                                        new Dictionary<string, string> {{"username", username}, {"password", password}},
                                                        false);
-
             var loginResult = new LoginResult();
-            if (response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(content);
 
-                HttpService.SetToken(tokenResponse.Access_Token);
+            HttpService.SetToken(tokenResponse.Access_Token);
 
-                loginResult.User = await LoadLoginInfo(appSettings);
-            }
+            loginResult.User = await LoadLoginInfo(appSettings);
 
             if (loginResult.User == null) {
                 loginResult.Error = "Login failed";
@@ -38,36 +32,21 @@ namespace MyApp.Services
         }
 
         public async Task<User> LoadLoginInfo(AppSettings appSettings) {
-            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/security/loadlogininfo");
+            var loginInfo = await HttpService.GetAsync<LoginInfo>($"{appSettings?.Api}/api/security/loadlogininfo");
 
-            User user = null;
-            if (response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
-                var loginInfo = JsonConvert.DeserializeObject<LoginInfo>(content);
+            AppSettingsService.Set(MyAppConstants.CurrentUser, loginInfo.User);
 
-                AppSettingsService.Set(MyAppConstants.CurrentUser, loginInfo.User);
-
-                user = loginInfo.User;
-            }
-            return user;
+            return loginInfo.User;
         }
 
         public async Task<SystemSettings> GetSystemSettings() {
             var appSettings = AppSettings;
 
-            var response = await HttpService.GetAsync($"{appSettings?.Api}/api/portal/getportalsettings", null, false);
+            var systemSettings = await HttpService.GetAsync<SystemSettings>($"{appSettings?.Api}/api/portal/getportalsettings", null, false);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var systemSettings = JsonConvert.DeserializeObject<SystemSettings>(content);
+            AppSettingsService.Set(MyAppConstants.SystemSettings, systemSettings);
 
-                AppSettingsService.Set(MyAppConstants.SystemSettings, systemSettings);
-
-                return systemSettings;
-            }
-
-            return null;
+            return systemSettings;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using MyApp.Models;
 using MyApp.Services.API;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using MyApp.Models.Widgets;
 
 namespace MyApp.Services
@@ -33,27 +32,13 @@ namespace MyApp.Services
                 url += "/" + options.Action;
             }
 
-            var response = await HttpService.GetAsync(url, options.QueryParameters);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ListResult<T>>(content);
-            }
-            return null;
+            return await HttpService.GetAsync<ListResult<T>>(url, options.QueryParameters);
         }
 
         public async Task<ListOptions<T>> ListOptions(Widget widget) {
             var url = GetListOptionsUrl(widget.ListId);
 
-            var response = await HttpService.GetAsync(url);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ListOptions<T>>(content);
-            }
-            return null;
+            return await HttpService.GetAsync<ListOptions<T>>(url);
         }
 
         private string GetListOptionsUrl(string listId) {
@@ -62,6 +47,23 @@ namespace MyApp.Services
             url = url + (listId.EndsWith(".json", System.StringComparison.OrdinalIgnoreCase)
                         ? "/assets/json/list-configs/" + listId
                          : "/api/" + listId + "/listoptions");
+
+            return url;
+        }
+
+        public async Task<dynamic> GetForm(Widget widget)
+        {
+            var url = GetFormUrl(widget.FormUrl);
+
+            return await HttpService.GetAsync(url);
+        }
+
+        private string GetFormUrl(string formUrl) {
+            var url = $"{AppSettings.Api}";
+
+            url = url + (formUrl.EndsWith(".json", System.StringComparison.OrdinalIgnoreCase)
+                         ? "/assets/json/form-configs/" + formUrl
+                         : "/api/" + formUrl + "/getform");
 
             return url;
         }

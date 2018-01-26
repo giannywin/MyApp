@@ -13,5 +13,7 @@ namespace MyApp.Models.Widgets
         public bool Collapsed { get; set; }
 
         public Type ListType { get; set; }
+
+        public string FormUrl { get; set; }
     }
 }

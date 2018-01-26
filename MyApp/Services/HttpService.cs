@@ -6,6 +6,8 @@ using MyApp.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using ModernHttpClient;
+using System.Dynamic;
+using Newtonsoft.Json.Converters;
 
 namespace MyApp.Services
 {
@@ -17,8 +19,27 @@ namespace MyApp.Services
 
         protected internal IAppSettingsService AppSettingsService { get; set; }
 
-        public async Task<HttpResponseMessage> PostAsync(string url, Dictionary<string, string> parameters, bool refreshToken = true)
+        public async Task<T> PostAsync<T>(string url, Dictionary<string, string> parameters, bool refreshToken = true)
         {
+            var response = await PostAsyncBase(url, parameters, refreshToken);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        public async Task<dynamic> PostAsync(string url, Dictionary<string, string> parameters, bool refreshToken = true)
+        {
+            var response = await PostAsyncBase(url, parameters, refreshToken);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            dynamic result = JsonConvert.DeserializeObject<ExpandoObject>(content, new ExpandoObjectConverter());
+
+            return result;
+        }
+
+        private async Task<HttpResponseMessage> PostAsyncBase(string url, Dictionary<string, string> parameters, bool refreshToken) {
             var client = new HttpClient(new NativeMessageHandler());
 
             AddAuthorizationHeader(client);
@@ -27,21 +48,47 @@ namespace MyApp.Services
 
             var response = await client.PostAsync(url, formEncodedContent);
 
+            response.EnsureSuccessStatusCode();
+
             HandleRefreshToken(response, refreshToken);
 
             return response;
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string url, Dictionary<string, object> queryParameters = null, bool refreshToken = true) {
+        public async Task<T> GetAsync<T>(string url, Dictionary<string, object> queryParameters = null, bool refreshToken = true) {
+            var client = new HttpClient(new NativeMessageHandler());
+
+            var response = await GetAsyncBase(url, queryParameters, refreshToken);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        public async Task<dynamic> GetAsync(string url, Dictionary<string, object> queryParameters = null, bool refreshToken = true)
+        {
+            var response = await GetAsyncBase(url, queryParameters, refreshToken);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            dynamic result = JsonConvert.DeserializeObject<ExpandoObject>(content, new ExpandoObjectConverter());
+
+            return result;
+        }
+
+        private async Task<HttpResponseMessage> GetAsyncBase(string url, Dictionary<string, object> queryParameters, bool refreshToken) {
             var client = new HttpClient(new NativeMessageHandler());
 
             AddAuthorizationHeader(client);
 
-            if (queryParameters != null && queryParameters.Count > 0) {
+            if (queryParameters != null && queryParameters.Count > 0)
+            {
                 url += queryParameters.ToQueryString(url.Contains("?") ? "&" : "?");
             }
 
             var response = await client.GetAsync(url);
+
+            response.EnsureSuccessStatusCode();
 
             HandleRefreshToken(response, refreshToken);
 

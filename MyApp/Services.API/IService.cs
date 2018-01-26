@@ -9,5 +9,7 @@ namespace MyApp.Services.API
         Task<ListResult<T>> Get(GetOptions options);
 
         Task<ListOptions<T>> ListOptions(Widget widget);
+
+        Task<dynamic> GetForm(Widget widget);
     }
 }

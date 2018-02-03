@@ -44,6 +44,8 @@ namespace MyApp.Services
 
             AddAuthorizationHeader(client);
 
+            AddOrigin(client);
+
             var formEncodedContent = new FormUrlEncodedContent(parameters ?? new Dictionary<string, string>());
 
             var response = await client.PostAsync(url, formEncodedContent);
@@ -81,6 +83,8 @@ namespace MyApp.Services
 
             AddAuthorizationHeader(client);
 
+            AddOrigin(client);
+
             if (queryParameters != null && queryParameters.Count > 0)
             {
                 url += queryParameters.ToQueryString(url.Contains("?") ? "&" : "?");
@@ -102,6 +106,12 @@ namespace MyApp.Services
             {
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             }
+        }
+
+        protected internal void AddOrigin(HttpClient client) {
+            var appSettings = AppSettingsService.Get<AppSettings>(MyAppConstants.AppSettings);
+
+            client.DefaultRequestHeaders.Add("Origin", appSettings.Api);
         }
 
         protected internal void HandleRefreshToken(HttpResponseMessage result, bool refreshToken) {

@@ -31,7 +31,7 @@ namespace MyApp.PageModels
 
             if (!systemSettings.PortalDisableMyRecords)
             {
-                MenuPageItems.Add(new MenuPageItem { Title = "My Records", Icon = "menu_2.png", PageType = typeof(MainTabPageModel), WidgetConfiguration = WidgetConfigurations.MyTasksWidgetConfiguration });
+                MenuPageItems.Add(new MenuPageItem { Title = "My Records", Icon = "menu_2.png", PageType = typeof(DashboardPageModel), WidgetConfiguration = WidgetConfigurations.MyRecordsWidgetConfiguration });
             }
 
             if (!systemSettings.PortalDisableIncidents)
@@ -39,7 +39,7 @@ namespace MyApp.PageModels
                 MenuPageItems.Add(new MenuPageItem { Title = "Event Reports", Icon = "menu_3.png", PageType = typeof(DashboardPageModel), WidgetConfiguration = WidgetConfigurations.EventReportsWidgetConfiguration });
             }
 
-            MenuPageItems.Add(new MenuPageItem { Title = "Offline", Icon = "menu_4.png", PageType = typeof(DashboardPageModel), WidgetConfiguration = WidgetConfigurations.MyTasksWidgetConfiguration });
+            MenuPageItems.Add(new MenuPageItem { Title = "Offline", Icon = "menu_4.png", PageType = typeof(MainTabPageModel), WidgetConfiguration = WidgetConfigurations.MyTasksWidgetConfiguration });
         }
     }
 }

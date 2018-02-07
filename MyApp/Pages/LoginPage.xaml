@@ -16,7 +16,8 @@
             <Entry Text="{Binding Username}"
                 Placeholder="Username"/>
             <Entry Text="{Binding Password}"
-                Placeholder="Password" />
+                Placeholder="Password"
+                IsPassword="true"/>
             <Button Text="Log In"
                 Style="{StaticResource PrimaryButton}"
                 Command="{Binding OnLoginCommand}"/>
